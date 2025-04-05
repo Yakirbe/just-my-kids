@@ -1,3 +1,32 @@
 *.db
 claude_desktop_config.json
 whatsapp.log
+config.json
+
+*.heic
+*.HEIC
+
+# Ignore images except for output.gif
+*.jpg
+*.jpeg
+*.png
+*.heic
+*.HEIC
+!output.gif
+
+#videos
+*.mp4
+*.MP4
+*.mov
+*.MOV
+*.avi
+*.AVI
+
+# Ignore media directories
+whatsapp-bridge/store/
+debug_output/
+
+# Ignore actual reference images but keep the example directory
+reference_images/*
+!reference_images/.example/
+!reference_images/.example/**

@@ -150,17 +150,32 @@ def get_message_context(
     return context
 
 @mcp.tool()
-def send_message(phone_number: str, message: str) -> Dict[str, Any]:
+def send_message(
+    phone_number: str, 
+    message: str, 
+    media_url: Optional[str] = None, 
+    media_type: Optional[str] = None, 
+    caption: Optional[str] = None
+) -> Dict[str, Any]:
     """Send a WhatsApp message to the specified phone number.
     
     Args:
         phone_number: The recipient's phone number, with country code but no + or other symbols
         message: The message text to send
+        media_url: Optional URL or file path to the media to send
+        media_type: Optional type of media being sent (e.g. "image", "video", "document")
+        caption: Optional caption for the media
     
     Returns:
         A dictionary containing success status and a status message
     """
-    success, status_message = whatsapp_send_message(phone_number, message)
+    success, status_message = whatsapp_send_message(
+        phone_number=phone_number,
+        message=message,
+        media_url=media_url,
+        media_type=media_type,
+        caption=caption
+    )
     return {
         "success": success,
         "message": status_message

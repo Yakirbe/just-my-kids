@@ -1,0 +1,57 @@
+{
+    // List of WhatsApp group IDs to monitor for images
+    // Run "go run main.go -list-groups" to get a list of your group IDs
+    "input_groups": [
+        "GROUP_ID_1@g.us",  // Replace with actual group ID from WhatsApp
+        "GROUP_ID_2@g.us"   // Replace with actual group ID from WhatsApp
+    ],
+
+    // Configuration for people whose faces you want to detect
+    // The key (e.g., "person1") must match the name of the directory in reference_images/
+    "destinations": {
+        "person1": {
+            // Display name used in notifications
+            "name": "Person One", 
+            // Where to send notifications - can be a group ID or phone number
+            "group": "NOTIFICATION_GROUP_ID@g.us"  // Replace with notification group ID
+        },
+        "person2": {
+            "name": "Person Two",
+            // For individual contacts, use international format without spaces or symbols
+            "group": "+PHONE_NUMBER"  // Replace with actual phone number with country code
+        }
+    },
+
+    // Media handling configuration
+    "media": {
+        // File types to process
+        "allowed_extensions": [".jpg", ".jpeg", ".png", ".heic", ".HEIC"],
+        // Temporary directory where images are stored
+        "store_path": "whatsapp-bridge/store/media"
+    },
+
+    // Face detection algorithm settings
+    "face_detection": {
+        // Directory containing reference images
+        "known_faces_dir": "reference_images",
+        // How many reference photos need to match for a positive identification
+        // Higher = fewer false positives, but might miss some matches
+        "min_matching_faces": 2,
+        // Face distance threshold (0.0-1.0)
+        // This is a distance metric - LOWER values indicate BETTER matches
+        // Lower values (0.4) = stricter matching, fewer false positives
+        // Higher values (0.6) = more permissive, fewer missed detections
+        "confidence_threshold": 0.5,
+        // Face detection model to use
+        // Options: "hog" (faster) or "cnn" (more accurate but slower)
+        "model": "cnn"
+    },
+
+    // Debug settings (optional)
+    "debug": {
+        // Set to true to enable debug mode
+        "enabled": false,
+        // Directory where debug information will be stored
+        "output_dir": "debug_output"
+    }
+} 

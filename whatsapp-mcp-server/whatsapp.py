@@ -662,12 +662,15 @@ def get_direct_chat_by_contact(sender_phone_number: str) -> Optional[Chat]:
         if 'conn' in locals():
             conn.close()
 
-def send_message(phone_number: str, message: str) -> Tuple[bool, str]:
+def send_message(phone_number: str, message: str, media_url: Optional[str] = None, media_type: Optional[str] = None, caption: Optional[str] = None) -> Tuple[bool, str]:
     """Send a WhatsApp message to the specified phone number.
     
     Args:
         phone_number (str): The recipient's phone number, with country code but no + or other symbols
         message (str): The message text to send
+        media_url (str, optional): URL or file path to the media to send
+        media_type (str, optional): Type of media being sent (e.g. "image", "video", "document")
+        caption (str, optional): Caption for the media
         
     Returns:
         Tuple[bool, str]: A tuple containing success status and a status message
@@ -678,6 +681,14 @@ def send_message(phone_number: str, message: str) -> Tuple[bool, str]:
             "phone": phone_number,
             "message": message
         }
+        
+        # Add media parameters if provided
+        if media_url:
+            payload["media_url"] = media_url
+        if media_type:
+            payload["media_type"] = media_type
+        if caption:
+            payload["caption"] = caption
         
         response = requests.post(url, json=payload)
         

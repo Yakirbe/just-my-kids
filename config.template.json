@@ -1,0 +1,30 @@
+{
+    "input_groups": [
+        "GROUP_ID_1@g.us",
+        "GROUP_ID_2@g.us"
+    ],
+    "destinations": {
+        "person1": {
+            "name": "Person One",
+            "group": "NOTIFICATION_GROUP_ID@g.us"
+        },
+        "person2": {
+            "name": "Person Two",
+            "group": "+PHONE_NUMBER"
+        }
+    },
+    "media": {
+        "allowed_extensions": [".jpg", ".jpeg", ".png", ".heic", ".HEIC"],
+        "store_path": "whatsapp-bridge/store/media"
+    },
+    "face_detection": {
+        "known_faces_dir": "reference_images",
+        "min_matching_faces": 2,
+        "confidence_threshold": 0.5,
+        "model": "cnn"
+    },
+    "debug": {
+        "enabled": false,
+        "output_dir": "debug_output"
+    }
+} 
