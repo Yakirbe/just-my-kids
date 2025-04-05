@@ -272,6 +272,55 @@ go run main.go -port 8888
 python face_filter_service.py
 ```
 
+### 6. Optional: Chat with Your WhatsApp Data (AI Integration)
+
+Want to search or chat about your WhatsApp messages with Claude or Cursor? You can connect the WhatsApp MCP server to your favorite AI assistant:
+
+#### Claude Desktop Setup
+1. Find your Python path by running `which python` in your terminal
+2. Create a config file at `~/Library/Application Support/Claude/claude_desktop_config.json`:
+```json
+{
+  "mcpServers": {
+    "whatsapp": {
+      "command": "/path/to/python", 
+      "args": [
+        "--directory",
+        "/full/path/to/just-my-kids/whatsapp-mcp-server",
+        "run",
+        "main.py"
+      ]
+    }
+  }
+}
+```
+3. Replace `/path/to/python` with your actual Python path
+4. Replace `/full/path/to/just-my-kids` with your actual repository location
+5. Restart Claude Desktop and you'll see WhatsApp as an available integration
+
+#### Cursor Setup
+1. Find your Python path by running `which python` in your terminal
+2. Create a config file at `~/.cursor/mcp.json`:
+```json
+{
+  "mcpServers": {
+    "whatsapp": {
+      "command": "/path/to/python",
+      "args": [
+        "--directory",
+        "/full/path/to/just-my-kids/whatsapp-mcp-server",
+        "run",
+        "main.py"
+      ]
+    }
+  }
+}
+```
+3. Replace the paths as described above
+4. Restart Cursor and you can access your WhatsApp chats through AI
+
+This lets you search your messages, find conversations with specific people, and even send messages - all through your AI assistant!
+
 ## Future Roadmap
 
 - [ ] Video file support
