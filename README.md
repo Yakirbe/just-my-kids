@@ -1,25 +1,29 @@
 # Just My Kids
 
-A WhatsApp bot that monitors group photos and only notifies you when your kids appear - filtering out all the other children. Perfect for busy parents who want to stay up-to-date with their children's school photos without scrolling through hundreds of images.
+A simple WhatsApp bot that filters group photos and only notifies you when your kids appear. No more scrolling through hundreds of kindergarten photos to find your little ones!
 
 ![Demo of WhatsApp Face Detection](output.gif)
 
-## Why Use This?
+## The Problem This Solves
 
-- 👨‍👩‍👧‍👦 **Focus on what matters**: Get notified only when your children appear in photos
-- 📲 **Save time**: No more scrolling through countless school and kindergarten group photos 
-- 🔍 **Advanced detection**: Uses face recognition to identify your children with high accuracy
-- 🔒 **Private and secure**: All processing happens locally on your machine
-- ⚙️ **Highly customizable**: Configure thresholds and notification preferences
+Parents know the struggle - you're added to a school WhatsApp group that gets flooded with photos, but you only care about the ones with your own children. This little tool filters through all those images automatically so you don't have to.
+
+## How It Works
+
+1. Monitors your WhatsApp groups in the background
+2. Uses face recognition to identify your children
+3. Sends you a notification only when your kids appear in photos
+4. Ignores all the other images
+
+No more notification fatigue or endless scrolling!
 
 ## Features
 
-- 🔍 Real-time monitoring of WhatsApp groups
-- 👥 Advanced face detection and recognition using multiple reference images
-- 📱 Automatic WhatsApp notifications when known faces are detected
-- 🖼️ Support for multiple image formats (JPG, PNG, HEIC)
-- ⚙️ Highly configurable through a single JSON file
-- 🎯 Enhanced accuracy with multiple reference photos per person
+- 🔍 **Smart filtering**: Only alerts you about photos with your kids
+- 👨‍👩‍👧‍👦 **Multiple kids**: Set it up for all your children at once
+- 🖼️ **Works with most images**: Handles JPG, PNG, HEIC formats
+- 📱 **WhatsApp notifications**: Get alerts right in your preferred chat
+- 🛠️ **Easy to customize**: Simple settings in a single config file
 
 ## Prerequisites
 
@@ -28,12 +32,19 @@ A WhatsApp bot that monitors group photos and only notifies you when your kids a
 - WhatsApp account
 - [face_recognition](https://github.com/ageitgey/face_recognition) library and its dependencies
 
+## Quick Start
+
+1. Clone this repo
+2. Drop a few face photos of your kids in folders under `reference_images/`
+3. Set up your config to monitor your school groups
+4. Run the scripts and forget about endless photo scrolling!
+
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/whatsapp-face-detection
-cd whatsapp-face-detection
+git clone https://github.com/Yakirbe/just-my-kids.git
+cd just-my-kids
 ```
 
 2. Install Python dependencies:
@@ -261,18 +272,6 @@ go run main.go -port 8888
 python face_filter_service.py
 ```
 
-## How It Works
-
-1. The WhatsApp bridge monitors specified groups for new images
-2. When an image is received, it's saved to the media directory
-3. The face detection service monitors the media directory for new images
-4. When a new image appears:
-   - Faces are detected in the image
-   - Each face is compared against all reference photos for each person
-   - If enough reference photos match with high confidence, it's considered a match
-   - A notification is sent via WhatsApp
-   - The image is then deleted from the media directory
-
 ## Future Roadmap
 
 - [ ] Video file support
@@ -284,39 +283,33 @@ python face_filter_service.py
   - [ ] Delay/batch notifications
 - [ ] Web interface for configuration
 
+## Tips & Tricks
+
+- **Better accuracy**: The more photos you provide of each child, the better the detection
+- **Faster processing**: The "hog" model is quicker but the "cnn" model is more accurate - choose based on your needs
+- **Testing**: Start with a small group of test photos before monitoring busy school groups
+- **Notification group**: Create a dedicated group just for your notifications to keep things organized
+
 ## Troubleshooting
 
 ### Face Detection Issues
 
-1. If faces aren't being detected (too many false negatives):
-- Check the image quality in reference photos
-- Ensure faces are clearly visible and well-lit
-- Try increasing the confidence_threshold in config.json (e.g., from 0.5 to 0.6)
-- Switch to the more accurate "cnn" model by setting `"model": "cnn"` in the config (note this will be slower)
-- Add more reference photos taken in similar lighting conditions to the problem images
+Having trouble? Here are some quick fixes:
 
-2. If getting false positives (incorrect matches):
-- Increase the min_matching_faces setting (e.g., from 2 to 3)
-- Decrease the confidence_threshold (e.g., from 0.5 to 0.4) to require closer matches
-- Add more diverse reference photos
-- Ensure reference photos only contain one face
-- Switch to the more accurate "cnn" model for better discrimination between similar faces
+1. **Kids not being detected?**
+- Add more reference photos with different angles and lighting
+- Try the "cnn" model for better accuracy (`"model": "cnn"` in config)
+- Make sure the photos are clear and well-lit
 
-3. If getting false negatives (missed matches):
-- Decrease the min_matching_faces setting
-- Increase the confidence_threshold (e.g., from 0.5 to 0.6) to be more permissive
-- Add more reference photos from different angles
-- Include photos with similar lighting conditions
-- Add photos with similar expressions
-- If performance isn't a concern, set `"model": "cnn"` for more accurate face detection
+2. **Getting alerts for other kids?**
+- Add more diverse reference photos of your children
+- Lower the confidence threshold (try 0.4 instead of 0.5)
+- Make sure reference folders only contain your kids
 
-4. If face detection is too slow:
-- If using "cnn" model, switch to "hog" for faster processing
-- Reduce the number of groups being monitored
-- Consider running on a more powerful machine if using CNN mode
-- Reduce image resolution if possible
-
-> **Note**: The CNN model can be 2-5x slower than HOG but offers significantly better accuracy, especially for faces at odd angles or in challenging lighting conditions.
+3. **System running slowly?**
+- Switch to "hog" model if using "cnn"
+- Monitor fewer groups
+- Check your computer isn't running other intensive tasks
 
 ## Contributing
 
