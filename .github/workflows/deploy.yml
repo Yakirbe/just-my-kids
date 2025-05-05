@@ -1,0 +1,43 @@
+name: Deploy WhatsApp MCP
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+          
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Build WhatsApp Bridge
+        run: |
+          cd whatsapp-bridge
+          go build -o whatsapp-bridge
+          
+      - name: Create Procfile
+        run: |
+          echo "web: cd whatsapp-mcp-server && python main.py" > Procfile
+          echo "worker: cd whatsapp-bridge && ./whatsapp-bridge" >> Procfile
+          
+      - name: Set up deployment
+        run: |
+          echo "Starting server and client applications"
+          echo "python whatsapp-mcp-server/main.py & cd whatsapp-bridge && ./whatsapp-bridge" > start.sh
+          chmod +x start.sh 

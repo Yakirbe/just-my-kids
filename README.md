@@ -373,3 +373,68 @@ This project is based on the [WhatsApp MCP](https://github.com/lharries/whatsapp
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 Since this project builds upon [lharries/whatsapp-mcp](https://github.com/lharries/whatsapp-mcp), please also respect the license terms of the original repository.
+
+## Deployment
+
+### GitHub Deployment
+
+To deploy the application to GitHub:
+
+1. Fork this repository to your own GitHub account
+2. Clone your forked repository:
+```bash
+git clone https://github.com/your-username/whatsapp-mcp.git
+cd whatsapp-mcp
+```
+
+3. Make any necessary configuration changes:
+   - Update `config.json` with your specific settings
+   - Configure your input groups and destinations
+
+4. Commit and push your changes:
+```bash
+git add .
+git commit -m "Updated configuration for deployment"
+git push origin main
+```
+
+5. The GitHub Actions workflow will automatically build and deploy your application.
+
+### Manual Deployment
+
+If you prefer to deploy manually:
+
+1. Build the WhatsApp Bridge:
+```bash
+cd whatsapp-bridge
+go build -o whatsapp-bridge
+cd ..
+```
+
+2. Run the start script:
+```bash
+./start.sh
+```
+
+This will start both the WhatsApp MCP server and the WhatsApp Bridge client.
+
+### Troubleshooting Deployment Issues
+
+If you encounter the "No start command could be found" error:
+
+1. Ensure the Procfile exists in the root directory with the correct commands:
+```
+web: cd whatsapp-mcp-server && python main.py
+worker: cd whatsapp-bridge && ./whatsapp-bridge
+```
+
+2. Make sure start.sh is executable:
+```bash
+chmod +x start.sh
+```
+
+3. Verify that the WhatsApp Bridge is properly built:
+```bash
+cd whatsapp-bridge
+go build -o whatsapp-bridge
+```
