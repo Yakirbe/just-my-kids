@@ -21,10 +21,11 @@ jobs:
         with:
           go-version: '1.20'
           
-      - name: Install Python dependencies
+      - name: Install Python dependencies and uv
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install uv
+          uv pip install -r requirements.txt
           
       - name: Build WhatsApp Bridge
         run: |
@@ -33,11 +34,11 @@ jobs:
           
       - name: Create Procfile
         run: |
-          echo "web: cd whatsapp-mcp-server && python main.py" > Procfile
+          echo "web: uv --directory whatsapp-mcp-server run main.py" > Procfile
           echo "worker: cd whatsapp-bridge && ./whatsapp-bridge" >> Procfile
           
       - name: Set up deployment
         run: |
           echo "Starting server and client applications"
-          echo "python whatsapp-mcp-server/main.py & cd whatsapp-bridge && ./whatsapp-bridge" > start.sh
+          echo "uv --directory whatsapp-mcp-server run main.py & cd whatsapp-bridge && ./whatsapp-bridge" > start.sh
           chmod +x start.sh 

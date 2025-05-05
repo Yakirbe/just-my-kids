@@ -1,2 +1,2 @@
-web: cd whatsapp-mcp-server && python main.py
+web: uv --directory whatsapp-mcp-server run main.py
 worker: cd whatsapp-bridge && ./whatsapp-bridge 

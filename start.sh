@@ -1,12 +1,8 @@
 #!/bin/bash
 
 # Start the WhatsApp MCP server
-cd whatsapp-mcp-server
-python main.py &
+uv --directory whatsapp-mcp-server run main.py &
 SERVER_PID=$!
-
-# Go back to root directory
-cd ..
 
 # Start the WhatsApp Bridge
 cd whatsapp-bridge
